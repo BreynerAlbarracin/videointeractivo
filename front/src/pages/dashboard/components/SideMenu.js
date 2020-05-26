@@ -4,15 +4,16 @@ import { Row, Col, Button } from 'react-bootstrap'
 export default class SideMenu extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.user = JSON.parse(localStorage.getItem("Admin"))
     }
 
     render() {
         return (
             <Row>
                 <Col className="p-4">
-                    <div className="py-5 text-center">
-                        Menu Principal
+                    <div className="py-5 text-center h5">
+                        Bienvenido!
+                        <p className="h6">{this.user.name}</p>
                     </div>
                     <Button onClick={() => this.props.changeView('home')} variant="info" block>
                         Inicio
@@ -26,7 +27,13 @@ export default class SideMenu extends React.Component {
                     <Button onClick={() => this.props.changeView('register')} variant="info" block>
                         Registrar Salón
                     </Button>
-                    <Button onClick={() => this.props.changeView('logout')} variant="danger" block>
+                    <Button onClick={() => this.props.changeView('enrolledstudent')} variant="info" block>
+                        Matricular Estudiante
+                    </Button>
+                    <Button onClick={() => {
+                        localStorage.clear()
+                        this.props.changeView('admin')
+                    }} variant="danger" block>
                         Salir
                     </Button>
                 </Col>
