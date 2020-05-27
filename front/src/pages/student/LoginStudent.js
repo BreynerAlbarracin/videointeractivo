@@ -36,14 +36,33 @@ export default class LoginStudent extends React.Component {
 
                 if (response.result) {
                     console.log("Result -> State")
-                    this.setState({ result: response.result })
+                    this.setState({
+                        result: response.result,
+                        showModal: true
+                    })
                 }
             });
     }
 
-    ModalSelect = event => {
+    negative = event => {
         event.preventDefault()
-        console.log(event)
+        this.setState({
+            showModal: false,
+            errCode: 2,
+            errText: "Pregunta tu numero al profe, y no lo olvides"
+        })
+    }
+
+    positive = event => {
+        event.preventDefault()
+
+        this.setState({
+            showModal: false,
+            errCode: null,
+            errText: null
+        })
+
+        console.log(this.state)
     }
 
     render() {
@@ -55,7 +74,7 @@ export default class LoginStudent extends React.Component {
                             <Form className="text-center" onSubmit={this.SubmitForm}>
                                 <Form.Group controlId="number">
                                     <p className="h1 mx-3 my-5">HOLA!</p>
-                                    <Form.Control type="text" placeholder="Pon tu numero justo aqui" />
+                                    <Form.Control type="number" placeholder="Pon tu numero justo aqui" />
                                 </Form.Group>
                                 <Button variant="success" type="submit">
                                     JUGAR!
@@ -73,16 +92,16 @@ export default class LoginStudent extends React.Component {
                                     </Alert> : null
                             : null}
                         {this.state.result ?
-                            <Modal onHide={this.ModalSelect}>
+                            <Modal show={this.state.showModal}>
                                 <Modal.Header closeButton>
-                                    <Modal.Title>Modal heading</Modal.Title>
+                                    <Modal.Title>HOLA!</Modal.Title>
                                 </Modal.Header>
-                                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                                <Modal.Body>Tu nombre es {this.state.result.name} ?</Modal.Body>
                                 <Modal.Footer>
-                                    <Button variant="secondary" onClick={this.ModalSelect}>
+                                    <Button variant="secondary" onClick={this.negative}>
                                         No! Asi no me llamo! <SadEmoji />
                                     </Button>
-                                    <Button variant="primary" onClick={this.ModalSelect}>
+                                    <Button variant="primary" onClick={this.positive}>
                                         Si! Soy yo! <HappyEmoji />
                                     </Button>
                                 </Modal.Footer>

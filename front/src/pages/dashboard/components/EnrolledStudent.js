@@ -76,6 +76,16 @@ export default class EnrolledStudent extends React.Component {
                 accessNumber: passwd
             }).then(result => {
                 console.log(result)
+
+                if (result.err) {
+                    this.setState({
+                        errCode: result.err,
+                        errText: result.text
+                    })
+
+                    return
+                }
+
                 if (result.result) {
                     console.log("Result -> State")
                     this.setState({

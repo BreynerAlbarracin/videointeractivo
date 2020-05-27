@@ -4,7 +4,7 @@ var RS = require("../Models/RoomsStudents").RoomsStudents;
 exports.GetStudents = (req, res) => {
     Students.find({}, (err, result) => {
         if (err) throw err
-        
+
         res.send({
             result: result
         })
@@ -14,23 +14,47 @@ exports.GetStudents = (req, res) => {
 exports.Login = (req, res) => {
     console.log("Intento de login Estudiante: " + JSON.stringify(req.body));
 
-    let data = req.body;
+    let data = req.body.user;
 
-    if (data.number == "") {
+    console.log(data)
+
+    if (data == "") {
         res.send({
             err: 1,
             text: "Necesitamos tu numero",
         });
     } else {
-        let number = parseInt(data.number)
+        let number = parseInt(data)
+
+        console.log(number)
 
         if (number) {
             RS.findOne({
                 accessNumber: number
-            }, (err, result) => {
-                Students.findOne({
-                    id: RS.studentId
-                })
+            }, (err, room) => {
+                if (room) {
+                    console.log(room)
+                    Students.findOne({
+                        _id: room.studentId
+                    }, (err, result) => {
+                        console.log(result)
+                        if (result) {
+                            res.send({
+                                result: result
+                            })
+                        } else {
+                            res.send({
+                                err: 1,
+                                text: "Ups parece que tuvimos un error, corre y dile a tu profe"
+                            })
+                        }
+                    })
+                } else {
+                    res.send({
+                        err: 1,
+                        text: "Parece que este no es tu numero :c"
+                    })
+                }
             })
         } else {
             res.send({

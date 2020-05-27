@@ -70,34 +70,50 @@ exports.Register = (req, res) => {
 }
 
 exports.EnrolledStudent = (req, res) => {
-  var roomStudent = new RE({
-    studentId: req.body.studentId,
-    roomId: req.body.roomId,
+  console.log(req.body.accessNumber)
+  RE.find({
     accessNumber: req.body.accessNumber,
-  })
-
-  roomStudent.save((err) => {
-    if (err) throw err
-    console.log("room created!")
-
-    var scopes = new Scores({
-      studentId: req.body.studentId,
-      roomId: req.body.roomId,
-      teacherId: req.body.teacherId,
-      date: Date.now(),
-      score: 0,
-      errorsCount: 0
-    })
-
-    scopes.save((err) => {
-      if (err) throw err
+  }, (err, result) => {
+    console.log(result)
+    if (result.length > 0) {
+      console.log("This pass is using with another")
       res.send({
-        result: {
-          scope: scopes,
-          roomStudent: roomStudent
-        }
+        err: 1,
+        text: "Un usuario ya tiene esta contraseña",
       })
-    })
+    } else {
+      console.log("Add User in process")
+
+      var roomStudent = new RE({
+        studentId: req.body.studentId,
+        roomId: req.body.roomId,
+        accessNumber: req.body.accessNumber,
+      })
+
+      roomStudent.save((err) => {
+        if (err) throw err
+        console.log("room created!")
+
+        var scopes = new Scores({
+          studentId: req.body.studentId,
+          roomId: req.body.roomId,
+          teacherId: req.body.teacherId,
+          date: Date.now(),
+          score: 0,
+          errorsCount: 0
+        })
+
+        scopes.save((err) => {
+          if (err) throw err
+          res.send({
+            result: {
+              scope: scopes,
+              roomStudent: roomStudent
+            }
+          })
+        })
+      })
+    }
   })
 }
 
