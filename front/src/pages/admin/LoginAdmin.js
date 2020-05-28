@@ -48,7 +48,7 @@ export default class LoginAdmin extends React.Component {
         console.log("render")
         if (this.state.admin) {
             console.log("Redirect Home")
-            return <Redirect to={'/home'} />
+            return <Redirect to={'/V&TV/home'} />
         }
 
         return (

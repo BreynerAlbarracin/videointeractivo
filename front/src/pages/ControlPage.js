@@ -22,10 +22,10 @@ export default class ControlPage extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/admin" component={LoginAdmin} />
-          <Route path="/student" component={LoginStudent} />
+          <Route path="/V&TV/admin" component={LoginAdmin} />
+          <Route path="/V&TV/student" component={LoginStudent} />
 
-          <TeacherRouter path="/home" component={Dashboard} />
+          <TeacherRouter path="/V&TV/home" component={Dashboard} />
         </Switch>
       </Router>
     )
@@ -36,6 +36,6 @@ const TeacherRouter = ({ component: Component, ...rest }) => {
   return <Route {...rest} render={(props) => (
     JSON.parse(localStorage.getItem("Admin"))
       ? <Component {...props} />
-      : <Redirect to='/admin' />
+      : <Redirect to='/V&TV/admin' />
   )} />
 }

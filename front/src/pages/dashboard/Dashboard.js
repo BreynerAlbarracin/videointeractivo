@@ -32,7 +32,7 @@ export default class Dashboard extends React.Component {
 
     render() {
         if (this.state.logout) {
-            return <Redirect to={'/admin'} />
+            return <Redirect to={'/V&TV/admin'} />
         }
 
         return (
