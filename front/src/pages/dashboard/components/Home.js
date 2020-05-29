@@ -24,14 +24,13 @@ export default class Home extends React.Component {
                     err: stats.err,
                     text: stats.text
                 })
-
                 return
             }
 
             this.setState({
                 count: stats.count,
-                best: stats.best,
-                worse: stats.worse,
+                worse: stats.best,
+                best: stats.worse,
                 loading: false
             })
         })
