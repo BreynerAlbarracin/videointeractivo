@@ -127,13 +127,13 @@ exports.GetStats = (req, res) => {
     count = result
 
     Scores.findOne({})
-      .sort({ score: 'desc' })
+      .sort({ score: 'asc' })
       .exec(function (err, bestS) {
         if (err) throw err
         best = bestS
 
         Scores.findOne({})
-          .sort({ score: 'asc' })
+          .sort({ score: 'desc' })
           .exec(function (err, worseS) {
             if (err) throw err
             worse = worseS
