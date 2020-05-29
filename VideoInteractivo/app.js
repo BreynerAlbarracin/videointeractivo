@@ -6,6 +6,7 @@ var img2;
 var t;
 var boton;
 var botoneEnviar;
+var botonEmpezar;
 var botonSalir;
 var botonReiniciar;
 var botonConVid;
@@ -31,11 +32,11 @@ var intentos = 0;
 var minutos = 0;
 var segundos = 0;
 var contador = 0;
+
+var server = "http://animalgeek.sytes.net:5001/"
+var login = "http://animalgeek.sytes.net/V&TV/student"
 var name = ""
 var pass = ""
-//var login = "http://animalgeek.sytes.net/V&TV/student"
-var login = "http://localhost:3000/V&TV/student"
-var server = "http://localhost:5001"
 
 function preload() {
     img = loadImage('ap.png');
@@ -43,27 +44,46 @@ function preload() {
 }
 
 function setup() {
+
     var urlparams = new URLSearchParams(window.location.search)
     name = urlparams.get("name")
     pass = urlparams.get("pass")
 
-    if(!name || !pass){
-        window.location = login 
+    if (!name || !pass) {
+        window.location = login
     }
 
     crear();
+
+    botonEmpezar = createButton('Empezar');
+    botonEmpezar.style('border-radius', '12px');
+    botonEmpezar.style('background-color', '#4CAF50');
+    botonEmpezar.style('border', '4px solid #FFFFFF');
+    botonEmpezar.style('font-size', '40px');
+    botonEmpezar.style('color', 'white');
+    botonEmpezar.parent('sketch-holder');
+    botonEmpezar.mousePressed(empezar);
+    botonEmpezar.position(800, 300);
+    botonEmpezar.size(300, 140);
+    botonEmpezar.show();
+
+
 }
 
 function videoLoad() {
     status = 1;
-    videoFile.play();
+    videoFile.pause();
+
 }
 
 function crear() {
+
+
     setInterval(temporizador, 1000);
     var canvas = createCanvas(1280, 720);
     canvas.parent('sketch-holder');
-    canvas.position(320, 130)
+    canvas.position(320, 130);
+
 
     videoFile = createVideo('video.mp4', videoLoad);
     videoFile.hide();
@@ -76,6 +96,7 @@ function crear() {
     boton.style('color', 'white');
     boton.hide();
 
+
     botoneEnviar = createButton('Enviar');
     botoneEnviar.mousePressed(enviar);
     botoneEnviar.style('border-radius', '12px');
@@ -85,6 +106,7 @@ function crear() {
     botoneEnviar.style('color', 'white');
     botoneEnviar.hide();
 
+
     botonReiniciar = createButton('Reiniciar');
     botonReiniciar.style('border-radius', '12px');
     botonReiniciar.style('background-color', '#008CBA');
@@ -93,6 +115,11 @@ function crear() {
     botonReiniciar.style('color', 'white');
     botonReiniciar.parent('sketch-holder');
     botonReiniciar.mousePressed(reiniciar);
+    botonReiniciar.hide();
+
+
+
+
 
     botonSalir = createButton('Salir');
     botonSalir.style('border-radius', '12px');
@@ -102,22 +129,20 @@ function crear() {
     botonSalir.style('color', 'white');
     botonSalir.parent('sketch-holder');
     botonSalir.mousePressed(salir);
+    botonSalir.hide();
 
-    botonReiniciar.position(1270, 130);
-    botonReiniciar.size(160, 60);
-    botonReiniciar.show();
 
-    botonSalir.position(1440, 130);
-    botonSalir.size(160, 60);
-    botonSalir.show();
+
 
     videoFile.showControls();
 
     for (var i = 0; i < 1; i++) {
+
         boxes.push(new Box());
     }
 
     for (var i = 0; i < 1; i++) {
+
         monedas.push(new moneda());
     }
 
@@ -138,8 +163,9 @@ function temporizador() {
     }
 }
 
+
 function draw() {
-    print(intentos, tiempo, t);
+
     video = image(videoFile, 0, 0, 1280, 720);
     t = videoFile.time();
 
@@ -154,6 +180,10 @@ function draw() {
     if (t >= 93.00 && t <= 119.00) {
         mostrar();
     }
+
+
+
+
 
     if (t >= 133.00 && estado == 1) {
         videoFile.play();
@@ -174,6 +204,9 @@ function draw() {
         numMonedaP = 0;
         numMoneda = 12;
     }
+
+
+
 
     if (t >= 40.00 && t <= 40.50 && escena == 0) {
         desTiempo = 1;
@@ -205,7 +238,9 @@ function draw() {
                 monedas.splice(i, 1);
                 monedas.push(new moneda(tempmod[i]));
                 numMoneda++;
+
             }
+
         }
     }
 
@@ -252,7 +287,9 @@ function draw() {
                 boxes.splice(i, 1);
                 boxes[i] = new Box(tempman[i]);
                 numManzana++;
+
             }
+
         }
     }
 
@@ -299,16 +336,21 @@ function draw() {
                 monedas2.push(new moneda2(tempmod2[i]));
                 numMoneda--;
                 numMonedaP++;
+
             }
+
         }
     }
 
     if (t >= 118.00 && escena == 3) {
+
+
         videoFile.pause();
         fill(245, 218, 178);
         stroke(0);
         strokeWeight(4);
         rect(415, 120, 510, 390, 10);
+
 
         fill(100, 200, 50);
         stroke(0);
@@ -316,6 +358,7 @@ function draw() {
         textSize(60);
         text(tiempo.toString(), 760, 290);
         text(intentos.toString(), 840, 380);
+
 
         fill(255);
         stroke(0);
@@ -329,6 +372,25 @@ function draw() {
         botoneEnviar.position(890, 600);
         botoneEnviar.size(200, 80);
     }
+
+
+}
+
+
+function empezar() {
+    videoFile.play();
+    botonEmpezar.hide();
+
+    botonReiniciar.position(1270, 130);
+    botonReiniciar.size(160, 60);
+    botonReiniciar.show();
+
+
+
+
+    botonSalir.position(1440, 130);
+    botonSalir.size(160, 60);
+    botonSalir.show();
 }
 
 function mostrar() {
@@ -344,9 +406,11 @@ function mostrar() {
     text(numManzana.toString(), 190, 40);
     image(img2, 13, 5, 40, 40);
     image(img, 140, 0, 50, 50);
+
 }
 
 function continuar() {
+
     if (estado == 0) {
         boton.hide();
         if (numMoneda == 12) {
@@ -356,28 +420,37 @@ function continuar() {
             desTiempo = 0;
         }
         else {
+
             perder();
             intentos++;
         }
+
     }
 
     if (estado == 1) {
         boton.hide();
         if (numManzana === 6) {
+
             puntaje = 0;
             videoFile.play();
             escena = 2;
             desTiempo = 0;
+
         }
         else {
             perder();
+
             intentos++;
         }
+
+
     }
 
     if (estado == 2) {
         boton.hide();
         if (numMoneda == 6) {
+
+
             videoFile.play();
             escena = 3;
             desTiempo = 0;
@@ -387,25 +460,38 @@ function continuar() {
             perder();
             intentos++;
         }
+
     }
+
+
 }
 
+
 function perder() {
+
     if (estado == 0) {
+
         videoFile.play();
         videoFile.time(121.00);
+
     }
 
     if (estado == 1) {
+
         videoFile.play();
         videoFile.time(128.00);
+
     }
 
     if (estado == 2) {
+
         videoFile.play();
         videoFile.time(134.00);
+
     }
+
 }
+
 
 function reiniciar() {
     numMoneda = 0;
@@ -428,49 +514,85 @@ function reiniciar() {
     tiempo = "";
 }
 
+
 function enviar() {
     print("ENVIAR");
-    intentos, tiempo
 
-    window.location = login
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({ "pass": pass, "time": tiempo, "errors": intentos });
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    fetch(server + "scores/register", requestOptions)
+        .then(result => console.log(result.json()))
+        .catch(error => console.log('error', error));
 }
 
 function salir() {
     remove();
+
+    window.location = login
 }
 
+
 function mousePressed() {
+
     print(mouseX, mouseY);
     for (var i = 0; i < boxes.length; i++) {
 
         if (boxes[i].boxover == true) {
             boxes[i].locked = true;
+
+
         } else {
+
             boxes[i].locked = false;
+
         }
         boxes[i].xoffset = mouseX - boxes[i].xpos;
         boxes[i].yoffset = mouseY - boxes[i].ypos
+
     }
 
     for (var i = 0; i < monedas.length; i++) {
+
         if (monedas[i].boxover == true) {
             monedas[i].locked = true;
+
+
         } else {
+
             monedas[i].locked = false;
+
         }
         monedas[i].xoffset = mouseX - monedas[i].xpos;
         monedas[i].yoffset = mouseY - monedas[i].ypos
+
     }
 
     for (var i = 0; i < monedas2.length; i++) {
+
         if (monedas2[i].boxover == true) {
             monedas2[i].locked = true;
+
+
         } else {
+
             monedas2[i].locked = false;
+
         }
         monedas2[i].xoffset = mouseX - monedas2[i].xpos;
         monedas2[i].yoffset = mouseY - monedas2[i].ypos
+
     }
+
     return false
 }
 
@@ -549,6 +671,14 @@ function keyTyped() {
             videoFile.time(93.99);
         }
 
+        if (t >= 118.90 && t <= 118.00) {
+            videoFile.time(118.00);
+        }
+
+
+
+
+
     }
 
     if (key == 'a' && status == 1 && desTiempo == 0) {
@@ -566,5 +696,11 @@ function keyTyped() {
         if (escena == 3 && t <= 94.00) {
             videoFile.time(94.99);
         }
+
+
+
+
     }
+
+
 }

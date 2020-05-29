@@ -1,0 +1,18 @@
+.bg-m{
+    background-image: url('childen.jpg');
+    background-size: contain;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.bg-m::before{
+    width: 100vw;
+    height: 100vh;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    backdrop-filter: blur(10px);
+}

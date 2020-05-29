@@ -12,6 +12,10 @@ export async function GetRooms() {
     return await GetService('/rooms')
 }
 
+export async function GetScores(){
+    return await GetService('/scores/results')
+}
+
 export async function EnrolledStudents(params) {
     return await PostService('/teachers/enrolledstudent', params)
 }

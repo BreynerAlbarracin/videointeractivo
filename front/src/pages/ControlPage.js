@@ -1,4 +1,5 @@
 import React from "react";
+import { video } from '../env/env';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   BrowserRouter as Router,
@@ -39,7 +40,7 @@ const InteractiveVideo = () => {
   if (student) {
     var name = student.name
     var pass = student.pass
-    window.location = "http://localhost:3000/V&TV/interactivevideo/index.html?name=" + name + "&pass=" + pass
+    window.location = video + "/V&TV/interactivevideo/index.html?name=" + name + "&pass=" + pass
   }
 
   return <Redirect to={"/V&TV/student"} />

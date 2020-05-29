@@ -6,6 +6,7 @@ import Home from './components/Home'
 import Students from './components/Students'
 import RegisterRoom from './components/RegisterRoom'
 import EnrolledStudent from './components/EnrolledStudent'
+import Results from './components/Results'
 import "./Dashboard.css"
 
 export default class Dashboard extends React.Component {
@@ -55,7 +56,8 @@ export default class Dashboard extends React.Component {
                                         <RegisterRoom /> :
                                         this.state.view === 'enrolledstudent' ?
                                             <EnrolledStudent />
-                                            : null
+                                            : this.state.view === 'results' ?
+                                                <Results /> : null
                             }
                         </Card>
                     </Col>
