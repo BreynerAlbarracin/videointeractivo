@@ -2,11 +2,14 @@ import React from 'react'
 import './LoginStudent.css'
 import 'react-bootstrap'
 import { LoginStudentService } from '../../services/LoginService'
+import { Redirect } from 'react-router-dom'
 import { Row, Card, Col, Button, Form, Container, Alert, Modal } from 'react-bootstrap'
 import { SadEmoji, HappyEmoji } from "../../assets/icons/Emojis"
 
 export default class LoginStudent extends React.Component {
-    state = {}
+    state = {
+        changeView: false
+    }
 
     constructor(props) {
         super(props)
@@ -36,6 +39,8 @@ export default class LoginStudent extends React.Component {
 
                 if (response.result) {
                     console.log("Result -> State")
+                    response.result.pass = loginData.user
+                    localStorage.setItem("student", JSON.stringify(response.result))
                     this.setState({
                         result: response.result,
                         showModal: true
@@ -59,13 +64,19 @@ export default class LoginStudent extends React.Component {
         this.setState({
             showModal: false,
             errCode: null,
-            errText: null
+            errText: null,
+            changeView: true
         })
 
         console.log(this.state)
     }
 
     render() {
+        if (this.state.changeView) {
+            console.log("Redirect video")
+            return <Redirect to={'/V&TV/interactivevideo'} />
+        }
+
         return (
             <Container fluid className="full-h bg-m p-5">
                 <Row>

@@ -7,7 +7,7 @@ exports.Scores = mongoose.model(
     roomId: String,
     teacherId: String,
     date: String,
-    score: Number,
-    errorsCount: Number
+    score: String,
+    errorsCount: String
   })
 )

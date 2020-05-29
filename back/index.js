@@ -12,7 +12,7 @@ var server = express();
 
 server.use(
   cors({
-    origin: ["http://localhost:3000", "http://animalgeek.sytes.net"],
+    origin: "*",
   }),
   bodyParser.json()
 );
@@ -46,6 +46,7 @@ server.post("/rooms/createroom", RC.CreateRoom);
 /* Scores */
 //Get Method
 server.get("/scores/results", SCC.GetScores);
+server.post("/scores/register", SCC.Register);
 /* //Scores */
 
 server.listen(5001, () => {

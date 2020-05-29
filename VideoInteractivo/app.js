@@ -31,6 +31,11 @@ var intentos = 0;
 var minutos = 0;
 var segundos = 0;
 var contador = 0;
+var name = ""
+var pass = ""
+//var login = "http://animalgeek.sytes.net/V&TV/student"
+var login = "http://localhost:3000/V&TV/student"
+var server = "http://localhost:5001"
 
 function preload() {
     img = loadImage('ap.png');
@@ -38,6 +43,14 @@ function preload() {
 }
 
 function setup() {
+    var urlparams = new URLSearchParams(window.location.search)
+    name = urlparams.get("name")
+    pass = urlparams.get("pass")
+
+    if(!name || !pass){
+        window.location = login 
+    }
+
     crear();
 }
 
@@ -310,7 +323,7 @@ function draw() {
         textSize(60);
         text("Tiempo :", 500, 290);
         text("Incorrectas :", 500, 380);
-        text("Sebastián", 540, 200);
+        text(name, 540, 200);
 
         botoneEnviar.show();
         botoneEnviar.position(890, 600);
@@ -417,6 +430,9 @@ function reiniciar() {
 
 function enviar() {
     print("ENVIAR");
+    intentos, tiempo
+
+    window.location = login
 }
 
 function salir() {

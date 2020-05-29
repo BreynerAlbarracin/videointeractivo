@@ -26,10 +26,23 @@ export default class ControlPage extends Component {
           <Route path="/V&TV/student" component={LoginStudent} />
 
           <TeacherRouter path="/V&TV/home" component={Dashboard} />
+          <Route path="/V&TV/interactivevideo" component={InteractiveVideo} />
         </Switch>
       </Router>
     )
   }
+}
+
+const InteractiveVideo = () => {
+  var student = JSON.parse(localStorage.getItem("student"))
+
+  if (student) {
+    var name = student.name
+    var pass = student.pass
+    window.location = "http://localhost:3000/V&TV/interactivevideo/index.html?name=" + name + "&pass=" + pass
+  }
+
+  return <Redirect to={"/V&TV/student"} />
 }
 
 const TeacherRouter = ({ component: Component, ...rest }) => {
